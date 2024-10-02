@@ -1,0 +1,23 @@
+/* src/components/ChatWidthSlider.css */
+.chat-width-slider {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.chat-width-slider label {
+  margin-right: 10px;
+  color: #FFFFFF;
+  width: 150px;
+}
+
+.chat-width-slider input[type="range"] {
+  flex: 1;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.chat-width-slider span {
+  color: #FFFFFF;
+  width: 60px;
+}

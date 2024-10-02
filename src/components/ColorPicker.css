@@ -1,0 +1,21 @@
+/* src/components/ColorPicker.css */
+.color-picker {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .color-picker label {
+    margin-right: 10px;
+    width: 200px;
+    color: #FFFFFF;
+  }
+  
+  .color-picker input[type="color"] {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+  }
+  

@@ -1,0 +1,28 @@
+/* src/components/PreviewWindow.css */
+.preview-window {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .preview-window h2 {
+    color: #FFFFFF;
+    margin-bottom: 10px;
+  }
+  
+  .preview-window button {
+    background-color: #4375F5;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'UCityPro', sans-serif;
+    font-size: 14px;
+  }
+  
+  .preview-window button:hover {
+    background-color: #FFFFFF;
+    color: #1F2428;
+  }
+  

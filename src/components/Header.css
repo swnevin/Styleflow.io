@@ -1,0 +1,19 @@
+/* src/components/Header.css */
+.header {
+    background-color: #1F2428;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  .header .logo {
+    width: 250px;
+    height: auto;
+  }
+  
+  .header p {
+    color: #FFFFFF;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  

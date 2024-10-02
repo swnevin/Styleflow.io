@@ -1,0 +1,13 @@
+/* src/components/EmbedModeSelector.css */
+.embed-mode-selector label {
+    display: inline-block;
+    margin-right: 20px;
+    color: #FFFFFF;
+    font-size: 14px;
+  }
+  
+  .embed-mode-selector input {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  

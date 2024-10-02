@@ -1,0 +1,53 @@
+/* src/components/CSSDisplay.css */
+.css-display {
+    background-color: #2B3035;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #FFFFFF;
+  }
+  
+  .css-display h2 {
+    margin-bottom: 10px;
+  }
+  
+  .css-display textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    resize: vertical;
+    margin-bottom: 10px;
+    font-family: 'UCityPro', monospace;
+    font-size: 12px;
+    background-color: #1F2428;
+    color: #FFFFFF;
+  }
+  
+  .css-display button {
+    background-color: #4375F5;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .css-display button:hover {
+    background-color: #FFFFFF;
+    color: #1F2428;
+  }
+  
+  .css-display p {
+    margin-top: 10px;
+    color: #FFFFFF;
+  }
+  
+  .css-display code {
+    background-color: #3B4045;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  

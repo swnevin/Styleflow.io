@@ -1,0 +1,166 @@
+/* src/App.css */
+
+.App {
+  font-family: 'UCityPro', sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1F2428;
+  color: #FFFFFF;
+}
+
+.customization-panel {
+  background-color: #2B3035;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.customization-panel h2 {
+  margin-bottom: 15px;
+  color: #FFFFFF;
+}
+
+.customization-section {
+  margin-bottom: 20px;
+  /* Remove padding and background-color to allow accordion styles to take effect */
+  /* padding: 15px;
+  background-color: #3B4045; */
+  border-radius: 10px;
+}
+
+/* Accordion Styles */
+.accordion-header {
+  cursor: pointer;
+  user-select: none;
+  padding: 15px;
+  background-color: #3B4045;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  color: #FFFFFF;
+  border-radius: 10px;
+}
+
+.accordion-header:hover {
+  background-color: #4B5157;
+}
+
+.accordion-content {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #3B4045;
+  border-radius: 0 0 10px 10px;
+}
+
+.theme-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.color-picker,
+.font-selector {
+  margin-bottom: 10px;
+}
+
+/* Tooltip Styles */
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  top: -5px;
+  left: 105%;
+}
+
+[title] {
+  position: relative;
+}
+
+.launcher-settings-input,
+.assistant-info-input,
+.proactive-message-input,
+.auto-open-checkbox {
+  margin: 10px 0;
+}
+
+.launcher-settings-input label,
+.assistant-info-input label,
+.auto-open-checkbox label {
+  display: block;
+  margin-bottom: 5px;
+  color: #FFFFFF;
+}
+
+.proactive-messages-list {
+  margin-bottom: 10px;
+}
+
+.proactive-message-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4B5157;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.proactive-message-item span {
+  color: #FFFFFF;
+}
+
+.proactive-message-item button {
+  background-color: #E65100;
+  color: #FFFFFF;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.proactive-message-input input[type="text"] {
+  width: calc(100% - 120px);
+  margin-right: 10px;
+}
+
+.embed-mode-selector label {
+  display: inline-block;
+  margin-right: 10px;
+  color: #FFFFFF;
+}
+
+.embed-mode-selector input {
+  margin-right: 5px;
+}
+
+.chat-width-slider {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.chat-width-slider input[type="range"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.chat-width-slider span {
+  color: #FFFFFF;
+  width: 60px;
+}
+
+.auto-open-checkbox {
+  margin-top: 10px;
+}
+
+.auto-open-checkbox label {
+  color: #FFFFFF;
+}
+
+.auto-open-checkbox input {
+  margin-right: 5px;
+}

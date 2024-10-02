@@ -1,0 +1,23 @@
+/* src/components/ThemeButton.css */
+.theme-button {
+    background-color: #4375F5;
+    font-size: 14px;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .theme-button:hover {
+    background-color: #FFFFFF;
+    color: #1F2428;
+  }
+  
+  .theme-button.active {
+    background-color: #FFFFFF;
+    color: #1F2428;
+    border: 2px solid #4375F5;
+  }
+  

@@ -1,0 +1,15 @@
+/* src/components/AssistantInfoEditor.css */
+.assistant-info-input {
+    margin: 10px 0;
+  }
+  
+  .assistant-info-input label {
+    display: block;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+  }
+  
+  .assistant-info-input input {
+    width: 100%;
+  }
+  
