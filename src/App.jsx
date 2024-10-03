@@ -1,4 +1,5 @@
 // src/App.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import ColorPicker from './components/ColorPicker';
@@ -14,40 +15,79 @@ import EmbedModeSelector from './components/EmbedModeSelector';
 import ChatWidthSlider from './components/ChatWidthSlider';
 import AssistantInfoEditor from './components/AssistantInfoEditor';
 import ProactiveMessageEditor from './components/ProactiveMessageEditor';
+import HelpIcon from './components/HelpIcon';
+import templates from './templates';
 import './App.css';
 
 function App() {
-  // State variables
-  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF'); // Light mode background
-  const [textColor, setTextColor] = useState('#1F2428'); // Dark text color
-  const [brandColor, setBrandColor] = useState('#4375F5'); // Brand color
-  const [fontFamily, setFontFamily] = useState('UCityPro, sans-serif'); // Font family
-  const [theme, setTheme] = useState('Light'); // Theme
-  const [embedMode, setEmbedMode] = useState('overlay'); // 'overlay' or 'embedded'
-  const [chatWidth, setChatWidth] = useState(400); // Width in pixels
-  const [assistantName, setAssistantName] = useState('Assistant'); // Assistant name
-  const [assistantDescription, setAssistantDescription] = useState('How can I assist you today?'); // Description
-  const [assistantLogo, setAssistantLogo] = useState('https://i.postimg.cc/Bn95VC86/Styleflow-VF.png'); // Default logo URL
-  const [proactiveMessages, setProactiveMessages] = useState([]); // Array of proactive messages
-  const [projectID, setProjectID] = useState('66fa5d8dd6785bb2984c7cfb'); // Default project ID
-  const [autoOpen, setAutoOpen] = useState(true); // Auto-open widget
+  // ---------------------------
+  // Theme and Appearance States
+  // ---------------------------
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+  const [textColor, setTextColor] = useState('#1F2428');
+  const [brandColor, setBrandColor] = useState('#4375F5');
+  const [fontFamily, setFontFamily] = useState('sans-serif');
+  const [theme, setTheme] = useState('Light');
+  const [selectedTemplate, setSelectedTemplate] = useState('Default');
 
-  // User and assistant message styles
+  // ---------------------------------
+  // Embed and Widget Settings States
+  // ---------------------------------
+  const [embedMode, setEmbedMode] = useState('overlay');
+  const [chatWidth, setChatWidth] = useState(380);
+  const [autoOpen, setAutoOpen] = useState(true);
+
+  // -----------------------------------
+  // Assistant Information States
+  // -----------------------------------
+  const [assistantName, setAssistantName] = useState('Assistant');
+  const [assistantDescription, setAssistantDescription] = useState('How can I assist you today?');
+  const [assistantLogo, setAssistantLogo] = useState('https://i.postimg.cc/Bn95VC86/Styleflow-VF.png');
+  const [assistantAvatarImage, setAssistantAvatarImage] = useState('');
+  const [assistantDescriptionTextColor, setAssistantDescriptionTextColor] = useState('#000000');
+
+  // -------------------------------
+  // Proactive Messages States
+  // -------------------------------
+  const [proactiveMessages, setProactiveMessages] = useState([]);
+
+  // -------------------------------
+  // Voiceflow Project ID State
+  // -------------------------------
+  const [projectID, setProjectID] = useState('66fa5d8dd6785bb2984c7cfb');
+
+  // -------------------------------
+  // Message Styles States
+  // -------------------------------
   const [userMessageBgColor, setUserMessageBgColor] = useState('#E0F7FA');
   const [userMessageTextColor, setUserMessageTextColor] = useState('#006064');
   const [assistantMessageBgColor, setAssistantMessageBgColor] = useState('#FFF3E0');
   const [assistantMessageTextColor, setAssistantMessageTextColor] = useState('#E65100');
 
-  // Launcher settings
-  const [launcherColor, setLauncherColor] = useState('#4375F5');
-  const [launcherSize, setLauncherSize] = useState(60); // Size in pixels
-  const [launcherOffset, setLauncherOffset] = useState(20); // Offset in pixels
-  const [launcherImage, setLauncherImage] = useState(''); // URL to launcher image
+  // --------------------------------
+  // Interface Settings States
+  // --------------------------------
+  const [headerColor, setHeaderColor] = useState(brandColor);
+  const [footerColor, setFooterColor] = useState('');
+  const [titleTextColor, setTitleTextColor] = useState('#1F2428');
+  const [endChatTextColor, setEndChatTextColor] = useState('#000000');
+  const [userInputPlaceholderText, setUserInputPlaceholderText] = useState('Type your message...');
 
-  // Ref to track if the widget has been initialized
+  // -------------------------------
+  // Launcher Settings States
+  // -------------------------------
+  const [launcherColor, setLauncherColor] = useState('#4375F5');
+  const [launcherSize, setLauncherSize] = useState(60);
+  const [launcherImage, setLauncherImage] = useState('');
+
+  // ---------------------------------
+  // Reference to Check Initialization
+  // ---------------------------------
   const widgetInitialized = useRef(false);
 
-  // State to manage accordion sections
+  // ---------------------------------
+  // Accordion State Management
+  // ---------------------------------
   const [expandedSections, setExpandedSections] = useState({
     themeSettings: false,
     messageStyles: false,
@@ -55,9 +95,12 @@ function App() {
     assistantInfo: false,
     proactiveMessages: false,
     embedOptions: false,
+    interfaceSettings: false,
   });
 
-  // Function to toggle section expansion
+  // ---------------------------------
+  // Toggle Accordion Sections
+  // ---------------------------------
   const toggleSection = (sectionName) => {
     setExpandedSections((prevState) => ({
       ...prevState,
@@ -72,15 +115,55 @@ function App() {
    */
   const applyTheme = (selectedTheme) => {
     if (selectedTheme === 'Dark') {
-      setBackgroundColor('#1F2428'); // Dark mode background
-      setTextColor('#FFFFFF'); // Light text color
+      setBackgroundColor('#1F2428');
+      setTextColor('#FFFFFF');
+      setFooterColor('#4375F5');
+      setHeaderColor(brandColor);
+      setEndChatTextColor('#FFFFFF');
+      setAssistantDescriptionTextColor('#FFFFFF');
       setTheme('Dark');
     } else if (selectedTheme === 'Light') {
-      setBackgroundColor('#FFFFFF'); // Light mode background
-      setTextColor('#1F2428'); // Dark text color
+      setBackgroundColor('#FFFFFF');
+      setTextColor('#1F2428');
+      setFooterColor('');
+      setHeaderColor(brandColor);
+      setEndChatTextColor('#000000');
+      setAssistantDescriptionTextColor('#000000');
       setTheme('Light');
     }
   };
+
+  /**
+   * Applies a preset template by updating the state.
+   *
+   * @param {string} templateName - The name of the template to apply.
+   */
+  const applyTemplate = (templateName) => {
+    const template = templates[templateName];
+    if (template) {
+      setBackgroundColor(template.backgroundColor);
+      setTextColor(template.textColor);
+      setBrandColor(template.brandColor);
+      setFontFamily(template.fontFamily);
+      setHeaderColor(template.brandColor);
+      setSelectedTemplate(templateName);
+    }
+  };
+
+  /**
+   * Update colors based on theme changes.
+   */
+  useEffect(() => {
+    if (theme === 'Dark') {
+      setFooterColor('#4375F5');
+      setEndChatTextColor('#FFFFFF');
+      setAssistantDescriptionTextColor('#FFFFFF');
+    } else {
+      setFooterColor('');
+      setEndChatTextColor('#000000');
+      setAssistantDescriptionTextColor('#000000');
+    }
+  }, [theme]);
 
   /**
    * Generates CSS based on the current theme and customization settings.
@@ -89,138 +172,133 @@ function App() {
    */
   const generateCSS = () => {
     return `
-:host {
-    --fonts-default: ${fontFamily};
-    --brand-color: ${brandColor};
-    --hover-color: ${lightenColor(brandColor, 20)};
-    --dark-background: #262626;
-    --light-gray: ${theme === 'Light' ? '#F4F4F4' : '#303030'};
-    --font-color: ${textColor};
-    --user-message-bg-color: ${userMessageBgColor};
-    --user-message-text-color: ${userMessageTextColor};
-    --assistant-message-bg-color: ${assistantMessageBgColor};
-    --assistant-message-text-color: ${assistantMessageTextColor};
-    --chat-width: ${chatWidth}px;
-}
+    :host {
+        --fonts-default: ${fontFamily};
+        --brand-color: ${brandColor};
+        --hover-color: ${lightenColor(brandColor, 20)};
+        --dark-background: ${theme === 'Dark' ? '#1F2428' : '#FFFFFF'};
+        --light-gray: ${theme === 'Light' ? '#F4F4F4' : '#303030'};
+        --font-color: ${textColor};
+        --user-message-bg-color: ${userMessageBgColor};
+        --user-message-text-color: ${userMessageTextColor};
+        --assistant-message-bg-color: ${assistantMessageBgColor};
+        --assistant-message-text-color: ${assistantMessageTextColor};
+        --chat-width: ${chatWidth}px;
+        --footer-color: ${footerColor};
+        --header-color: ${headerColor};
+        --title-text-color: ${titleTextColor};
+        --end-chat-text-color: ${endChatTextColor};
+        --assistant-description-text-color: ${assistantDescriptionTextColor};
+    }
 
-/* Launcher Styles */
-.vfrc-launcher {
-    background-color: ${launcherColor};
-    ${launcherImage ? `background-image: url(${launcherImage});` : ''}
-    width: ${launcherSize}px;
-    height: ${launcherSize}px;
-    bottom: ${launcherOffset}px;
-    right: ${launcherOffset}px;
-}
+    /* Launcher Styles */
+    .vfrc-launcher {
+        background-color: ${launcherColor} !important;
+        ${launcherImage ? `background-image: url(${launcherImage});` : ''}
+        width: ${launcherSize}px !important;
+        height: ${launcherSize}px !important;
+        /* Offset disabled, coming soon */
+    }
 
-.vfrc-launcher:hover {
-    background-color: var(--hover-color);
-}
+    .vfrc-launcher:hover {
+        background-color: var(--hover-color) !important;
+    }
 
-/* Chat Styles */
-.vfrc-chat {
-    background-color: ${backgroundColor};
-    width: var(--chat-width);
-}
+    /* Chat Styles */
+    .vfrc-chat {
+        background-color: ${backgroundColor} !important;
+        width: var(--chat-width) !important;
+    }
 
-.vfrc-widget--chat {
-    max-height: 100% !important;
-}
+    .vfrc-widget--chat {
+        max-height: 100% !important;
+    }
 
-/* Header and Footer */
-.vfrc-header,
-.vfrc-footer {
-    background-color: var(--brand-color);
-}
+    /* Header */
+    .vfrc-header {
+        background-color: var(--header-color) !important;
+    }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    border-left: 1px solid var(--brand-color);
-}
+    /* Footer */
+    .vfrc-footer {
+        background-color: var(--footer-color) !important;
+    }
 
-::-webkit-scrollbar-thumb {
-    background-color: rgba(67, 117, 245, 0.3); /* Adjusted opacity */
-}
+    /* Title Text Color */
+    .vfrc-assistant-info--title {
+        color: var(--title-text-color) !important;
+    }
 
-/* Assistant Info */
-.vfrc-assistant-info--title {
-    color: var(--font-color);
-}
+    /* Assistant Description Text Color */
+    .vfrc-assistant-info--description {
+        color: var(--assistant-description-text-color) !important;
+    }
 
-.vfrc-assistant-info--description {
-    color: ${theme === 'Light' ? '#000000' : 'rgba(250, 250, 249, 0.8)'};
-}
+    /* Assistant Avatar Image */
+    .vfrc-assistant-avatar {
+        background-image: url(${assistantAvatarImage || assistantLogo}) !important;
+    }
 
-.vfrc-chat--session-time,
-.vfrc-timestamp,
-.vfrc-footer--watermark {
-    color: ${theme === 'Light' ? '#000000' : 'rgba(250, 250, 249, 0.8)'};
-}
+    /* End Chat Text Color */
+    .vfrc-footer .vfrc-button {
+        color: var(--end-chat-text-color) !important;
+    }
 
-.vfrc-assistant-info--description a,
-.vfrc-chat--session-time a,
-.vfrc-timestamp a,
-.vfrc-footer--watermark a {
-    color: var(--font-color);
-}
+    /* User Input Placeholder Text Color */
+    .vfrc-input::placeholder {
+        color: var(--font-color) !important;
+    }
 
-/* User Message */
-.vfrc-user-response .vfrc-message {
-    background-color: var(--user-message-bg-color);
-    color: var(--user-message-text-color);
-}
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        border-left: 1px solid var(--brand-color) !important;
+    }
 
-/* Assistant Message */
-.vfrc-system-response .vfrc-message {
-    background-color: var(--assistant-message-bg-color);
-    color: var(--assistant-message-text-color);
-}
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(67, 117, 245, 0.3) !important;
+    }
 
-/* Secondary Button */
-.vfrc-button--secondary {
-    background-color: var(--light-gray);
-    color: var(--font-color);
-    border-color: var(--brand-color);
-}
+    /* User Message */
+    .vfrc-user-response .vfrc-message {
+        background-color: var(--user-message-bg-color) !important;
+        color: var(--user-message-text-color) !important;
+    }
 
-.vfrc-button--secondary:hover {
-    font-weight: 700;
-    border-color: var(--brand-color);
-    border: 2px;
-}
+    /* Assistant Message */
+    .vfrc-system-response .vfrc-message {
+        background-color: var(--assistant-message-bg-color) !important;
+        color: var(--assistant-message-text-color) !important;
+    }
 
-/* Footer Button */
-.vfrc-footer button.vfrc-button {
-    position: relative;
-    background-color: var(--brand-color) !important;
-}
+    /* Secondary Button */
+    .vfrc-button--secondary {
+        background-color: var(--light-gray) !important;
+        color: var(--font-color) !important;
+        border-color: var(--brand-color) !important;
+    }
 
-.vfrc-footer button.vfrc-button::after {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inset: 0;
-    color: var(--font-color);
-    border: 2px;
-}
+    .vfrc-button--secondary:hover {
+        font-weight: 700 !important;
+        border-color: var(--brand-color) !important;
+        border: 2px !important;
+    }
 
-.vfrc-footer .vfrc-chat-input--button .vfrc-bubble {
-    background-color: var(--brand-color);
-}
+    /* Footer Button */
+    .vfrc-footer button.vfrc-button {
+        position: relative !important;
+        background-color: var(--brand-color) !important;
+    }
 
-.vfrc-prompt {
-    background-color: var(--brand-color);
-}
-
-.vfrc-prompt button {
-    color: var(--font-color);
-}
-
-.vfrc-prompt button:hover {
-    color: #efefef;
-}
-        `;
+    .vfrc-footer button.vfrc-button::after {
+        position: absolute !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        inset: 0 !important;
+        color: var(--font-color) !important;
+        border: 2px !important;
+    }
+    `;
   };
 
   /**
@@ -231,13 +309,13 @@ function App() {
    * @returns {string} - The lightened hex color code.
    */
   const lightenColor = (color, percent) => {
-    const num = parseInt(color.replace("#", ""), 16),
+    const num = parseInt(color.replace('#', ''), 16),
       amt = Math.round(2.55 * percent),
       R = (num >> 16) + amt,
       G = ((num >> 8) & 0x00ff) + amt,
       B = (num & 0x0000ff) + amt;
     return (
-      "#" +
+      '#' +
       (
         0x1000000 +
         (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
@@ -276,14 +354,11 @@ function App() {
    * @param {string} stylesheetUrl - The Data URL of the generated CSS stylesheet.
    */
   const loadVoiceflowChat = (stylesheetUrl) => {
-    // Function to initialize the widget
     const initializeWidget = () => {
-      // Hide the existing widget if it exists
       if (window.voiceflow && window.voiceflow.chat) {
         window.voiceflow.chat.hide();
       }
 
-      // Construct the render configuration based on embedMode
       const renderConfig =
         embedMode === 'embedded'
           ? {
@@ -294,7 +369,6 @@ function App() {
               mode: 'overlay',
             };
 
-      // Ensure target is a valid HTMLElement when in 'embedded' mode
       if (embedMode === 'embedded' && !renderConfig.target) {
         console.error(
           "Error: No element with ID 'voiceflow-chat-frame' found in the DOM."
@@ -310,13 +384,13 @@ function App() {
           assistant: {
             title: assistantName,
             description: assistantDescription,
-            image: assistantLogo || 'https://i.postimg.cc/Bn95VC86/Styleflow-VF.png', // Use placeholder if empty
+            image:
+              assistantLogo || 'https://i.postimg.cc/Bn95VC86/Styleflow-VF.png',
             stylesheet: stylesheetUrl,
           },
           render: renderConfig,
         })
         .then(() => {
-          // Push proactive messages if any
           if (proactiveMessages.length > 0) {
             window.voiceflow.chat.proactive.clear();
             window.voiceflow.chat.proactive.push(
@@ -326,10 +400,25 @@ function App() {
               }))
             );
           }
-          // Auto-open the widget if autoOpen is true
           if (autoOpen) {
             window.voiceflow.chat.open();
             console.log('Voiceflow widget opened.');
+          }
+          // Attempt to set the user input placeholder text
+          const iframe = document.querySelector('iframe');
+          if (iframe) {
+            iframe.onload = () => {
+              try {
+                const inputField = iframe.contentWindow.document.querySelector(
+                  '.vfrc-input'
+                );
+                if (inputField) {
+                  inputField.setAttribute('placeholder', userInputPlaceholderText);
+                }
+              } catch (error) {
+                console.error('Unable to access iframe content:', error);
+              }
+            };
           }
         })
         .catch((error) => {
@@ -337,9 +426,7 @@ function App() {
         });
     };
 
-    // Check if the Voiceflow script is already loaded
     if (!window.voiceflow || !window.voiceflow.chat) {
-      // Load the Voiceflow script
       const script = document.createElement('script');
       script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
       script.type = 'text/javascript';
@@ -349,19 +436,19 @@ function App() {
       document.head.appendChild(script);
       console.log('Voiceflow script added.');
     } else {
-      // Script already loaded, initialize the widget
       initializeWidget();
     }
   };
 
-  // Auto-load widget on first render
+  /**
+   * Load the widget on initial render
+   */
   useEffect(() => {
     if (!widgetInitialized.current) {
       handleWidgetLoad();
       widgetInitialized.current = true;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, []);
 
   return (
     <div className="App">
@@ -382,43 +469,89 @@ function App() {
               <div className="theme-buttons">
                 <ThemeButton
                   theme="Light"
-                  onClick={applyTheme}
+                  onClick={() => applyTheme('Light')}
                   active={theme === 'Light'}
-                  title="Switch to Light Mode"
                 >
                   Light Mode
                 </ThemeButton>
                 <ThemeButton
                   theme="Dark"
-                  onClick={applyTheme}
+                  onClick={() => applyTheme('Dark')}
                   active={theme === 'Dark'}
-                  title="Switch to Dark Mode"
                 >
                   Dark Mode
                 </ThemeButton>
               </div>
+
+              {/* Preset Templates Dropdown */}
+              <div className="template-dropdown">
+                <label htmlFor="template-select">
+                  Preset Templates:
+                  <HelpIcon text="Select a preset color scheme" />
+                </label>
+                <select
+                  id="template-select"
+                  value={selectedTemplate}
+                  onChange={(e) => applyTemplate(e.target.value)}
+                >
+                  {Object.keys(templates).map((templateName) => (
+                    <option key={templateName} value={templateName}>
+                      {templateName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <ColorPicker
-                label="Background Color:"
+                label={
+                  <>
+                    Background Color:
+                    <HelpIcon text="Select the background color of the widget" />
+                  </>
+                }
                 color={backgroundColor}
                 onChange={(e) => setBackgroundColor(e.target.value)}
-                title="Select the background color of the widget"
               />
               <ColorPicker
-                label="Text Color:"
+                label={
+                  <>
+                    Text Color:
+                    <HelpIcon text="Select the text color used in the widget" />
+                  </>
+                }
                 color={textColor}
                 onChange={(e) => setTextColor(e.target.value)}
-                title="Select the text color used in the widget"
               />
               <ColorPicker
-                label="Brand Color:"
+                label={
+                  <>
+                    Brand Color:
+                    <HelpIcon text="Select the brand color for buttons and highlights" />
+                  </>
+                }
                 color={brandColor}
                 onChange={(e) => setBrandColor(e.target.value)}
-                title="Select the brand color for buttons and highlights"
               />
               <FontSelector
                 font={fontFamily}
                 onChange={(e) => setFontFamily(e.target.value)}
-                title="Choose the font family for the widget"
+                label={
+                  <>
+                    Font Family:
+                    <HelpIcon text="Choose the font family for the widget" />
+                  </>
+                }
+              />
+              {/* Title Text Color */}
+              <ColorPicker
+                label={
+                  <>
+                    Title Text Color:
+                    <HelpIcon text="Set the color of the assistant's title text" />
+                  </>
+                }
+                color={titleTextColor}
+                onChange={(e) => setTitleTextColor(e.target.value)}
               />
             </div>
           )}
@@ -443,7 +576,6 @@ function App() {
                 setUserMessageTextColor={setUserMessageTextColor}
                 setAssistantMessageBgColor={setAssistantMessageBgColor}
                 setAssistantMessageTextColor={setAssistantMessageTextColor}
-                title="Customize the appearance of user and assistant messages"
               />
             </div>
           )}
@@ -464,12 +596,77 @@ function App() {
                 setLauncherColor={setLauncherColor}
                 launcherSize={launcherSize}
                 setLauncherSize={setLauncherSize}
-                launcherOffset={launcherOffset}
-                setLauncherOffset={setLauncherOffset}
                 launcherImage={launcherImage}
                 setLauncherImage={setLauncherImage}
-                title="Adjust the appearance and position of the launcher button"
               />
+            </div>
+          )}
+        </div>
+
+        {/* Interface Settings */}
+        <div className="customization-section">
+          <h3
+            onClick={() => toggleSection('interfaceSettings')}
+            className="accordion-header"
+          >
+            Interface Settings
+          </h3>
+          {expandedSections.interfaceSettings && (
+            <div className="accordion-content">
+              <ColorPicker
+                label={
+                  <>
+                    Header Color:
+                    <HelpIcon text="Set the background color of the header" />
+                  </>
+                }
+                color={headerColor}
+                onChange={(e) => setHeaderColor(e.target.value)}
+              />
+              <ColorPicker
+                label={
+                  <>
+                    Footer Color:
+                    <HelpIcon text="Set the background color of the footer" />
+                  </>
+                }
+                color={footerColor}
+                onChange={(e) => setFooterColor(e.target.value)}
+              />
+              <ColorPicker
+                label={
+                  <>
+                    End Chat Text Color:
+                    <HelpIcon text="Set the text color of the 'End Chat' button" />
+                  </>
+                }
+                color={endChatTextColor}
+                onChange={(e) => setEndChatTextColor(e.target.value)}
+              />
+              {/* Assistant Description Text Color */}
+              <ColorPicker
+                label={
+                  <>
+                    Assistant Description Text Color:
+                    <HelpIcon text="Set the color of the assistant's description text" />
+                  </>
+                }
+                color={assistantDescriptionTextColor}
+                onChange={(e) => setAssistantDescriptionTextColor(e.target.value)}
+              />
+              {/* User Input Placeholder Text */}
+              <div className="interface-settings-input">
+                <label>
+                  User Input Placeholder Text:
+                  <HelpIcon text="Set the placeholder text in the user input field" />
+                </label>
+                <input
+                  type="text"
+                  value={userInputPlaceholderText}
+                  onChange={(e) => setUserInputPlaceholderText(e.target.value)}
+                  placeholder="Enter placeholder text"
+                />
+              </div>
             </div>
           )}
         </div>
@@ -491,9 +688,10 @@ function App() {
                 setAssistantDescription={setAssistantDescription}
                 assistantLogo={assistantLogo}
                 setAssistantLogo={setAssistantLogo}
+                assistantAvatarImage={assistantAvatarImage}
+                setAssistantAvatarImage={setAssistantAvatarImage}
                 projectID={projectID}
                 setProjectID={setProjectID}
-                title="Set the name, description, logo, and project ID for your assistant"
               />
             </div>
           )}
@@ -512,7 +710,6 @@ function App() {
               <ProactiveMessageEditor
                 proactiveMessages={proactiveMessages}
                 setProactiveMessages={setProactiveMessages}
-                title="Create messages that will proactively engage users"
               />
             </div>
           )}
@@ -531,18 +728,13 @@ function App() {
               <EmbedModeSelector
                 embedMode={embedMode}
                 setEmbedMode={setEmbedMode}
-                title="Choose how the widget is embedded on the page"
               />
               <ChatWidthSlider
                 chatWidth={chatWidth}
                 setChatWidth={setChatWidth}
-                title="Adjust the width of the chat window"
               />
               {/* Auto Open Checkbox */}
-              <div
-                className="auto-open-checkbox"
-                title="Toggle whether the widget opens automatically"
-              >
+              <div className="auto-open-checkbox">
                 <label>
                   <input
                     type="checkbox"
@@ -550,6 +742,7 @@ function App() {
                     onChange={(e) => setAutoOpen(e.target.checked)}
                   />
                   Auto Open Widget
+                  <HelpIcon text="Toggle whether the widget opens automatically" />
                 </label>
               </div>
             </div>
@@ -570,6 +763,8 @@ function App() {
         proactiveMessages={proactiveMessages}
         projectID={projectID}
         autoOpen={autoOpen}
+        assistantAvatarImage={assistantAvatarImage}
+        userInputPlaceholderText={userInputPlaceholderText}
       />
       <Footer />
       {/* Add the voiceflow-chat-frame div when in embedded mode */}

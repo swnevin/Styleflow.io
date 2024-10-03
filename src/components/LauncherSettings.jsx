@@ -1,19 +1,17 @@
 // src/components/LauncherSettings.jsx
+
 import React from 'react';
 import ColorPicker from './ColorPicker';
+import HelpIcon from './HelpIcon';
 import './LauncherSettings.css';
 
-/**
- * LauncherSettings Component
- * Allows customization of the launcher button.
- */
 function LauncherSettings({
   launcherColor,
   setLauncherColor,
   launcherSize,
   setLauncherSize,
-  launcherOffset,
-  setLauncherOffset,
+  // launcherOffset, // Removed from props
+  // setLauncherOffset, // Removed from props
   launcherImage,
   setLauncherImage,
   title,
@@ -22,41 +20,51 @@ function LauncherSettings({
     <div className="launcher-settings" title={title}>
       <h3>Launcher Settings</h3>
       <ColorPicker
-        label="Launcher Color:"
+        label={
+          <>
+            Launcher Color:
+            <HelpIcon text="Select the color of the launcher button" />
+          </>
+        }
         color={launcherColor}
         onChange={(e) => setLauncherColor(e.target.value)}
-        title="Select the color of the launcher button"
       />
       <div className="launcher-settings-input">
-        <label>Launcher Size (px):</label>
+        <label>
+          Launcher Size (px):
+          <HelpIcon text="Set the size of the launcher button" />
+        </label>
         <input
           type="number"
           value={launcherSize}
           onChange={(e) => setLauncherSize(parseInt(e.target.value))}
           min="30"
           max="100"
-          title="Set the size of the launcher button"
         />
       </div>
+      {/* Launcher Offset Disabled */}
       <div className="launcher-settings-input">
-        <label>Launcher Offset (px):</label>
+        <label style={{ color: '#888' }}>
+          Launcher Offset (Coming Soon)
+          <HelpIcon text="Offset adjustment will be available soon. For now, you can change it in VoiceFlow." />
+        </label>
         <input
           type="number"
-          value={launcherOffset}
-          onChange={(e) => setLauncherOffset(parseInt(e.target.value))}
-          min="0"
-          max="100"
-          title="Set the offset of the launcher button from the bottom and right edges"
+          value={24}
+          disabled
+          style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }}
         />
       </div>
       <div className="launcher-settings-input">
-        <label>Launcher Image URL:</label>
+        <label>
+          Launcher Image URL:
+          <HelpIcon text="Provide a URL for a custom launcher image" />
+        </label>
         <input
           type="text"
           value={launcherImage}
           onChange={(e) => setLauncherImage(e.target.value)}
           placeholder="Enter image URL"
-          title="Provide a URL for a custom launcher image"
         />
       </div>
     </div>

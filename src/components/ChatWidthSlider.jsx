@@ -14,7 +14,7 @@ function ChatWidthSlider({ chatWidth, setChatWidth, title }) {
         type="range"
         id="chatWidth"
         min="300"
-        max="800"
+        max="380"
         value={chatWidth}
         onChange={(e) => setChatWidth(parseInt(e.target.value))}
       />

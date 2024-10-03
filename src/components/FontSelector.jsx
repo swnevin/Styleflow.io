@@ -12,7 +12,7 @@ import './FontSelector.css';
  */
 function FontSelector({ font, onChange, title }) {
   const fonts = [
-    'UCityPro, sans-serif',
+    'sans-serif',
     'Arial, sans-serif',
     'Helvetica, sans-serif',
     'Courier New, monospace',

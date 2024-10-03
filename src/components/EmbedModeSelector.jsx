@@ -5,10 +5,12 @@ import './EmbedModeSelector.css';
 /**
  * EmbedModeSelector Component
  * Allows the user to select between 'overlay' and 'embedded' modes.
+ * Embedded option is disabled and marked as 'COMING SOON'.
  */
 function EmbedModeSelector({ embedMode, setEmbedMode, title }) {
   return (
     <div className="embed-mode-selector" title={title}>
+      {/* Overlay Option */}
       <label>
         <input
           type="radio"
@@ -18,14 +20,15 @@ function EmbedModeSelector({ embedMode, setEmbedMode, title }) {
         />
         Overlay
       </label>
-      <label>
+      
+      {/* Embedded Option (disabled and marked as 'COMING SOON') */}
+      <label style={{ color: '#888', cursor: 'not-allowed' }}>
         <input
           type="radio"
           value="embedded"
-          checked={embedMode === 'embedded'}
-          onChange={(e) => setEmbedMode(e.target.value)}
+          disabled
         />
-        Embedded
+        Embedded (COMING SOON)
       </label>
     </div>
   );

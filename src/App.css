@@ -1,7 +1,7 @@
 /* src/App.css */
 
 .App {
-  font-family: 'UCityPro', sans-serif;
+  font-family: sans-serif;
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
@@ -22,9 +22,6 @@
 
 .customization-section {
   margin-bottom: 20px;
-  /* Remove padding and background-color to allow accordion styles to take effect */
-  /* padding: 15px;
-  background-color: #3B4045; */
   border-radius: 10px;
 }
 
@@ -122,7 +119,7 @@
   border-radius: 5px;
 }
 
-.proactive-message-input input[type="text"] {
+.proactive-message-input input[type='text'] {
   width: calc(100% - 120px);
   margin-right: 10px;
 }
@@ -143,7 +140,7 @@
   margin-top: 10px;
 }
 
-.chat-width-slider input[type="range"] {
+.chat-width-slider input[type='range'] {
   flex: 1;
   margin-right: 10px;
 }
@@ -163,4 +160,95 @@
 
 .auto-open-checkbox input {
   margin-right: 5px;
+}
+
+/* Preset Templates Dropdown */
+.template-dropdown {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.template-dropdown label {
+  color: #FFFFFF;
+  margin-right: 10px;
+  min-width: 150px;
+}
+
+.template-dropdown select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #3B4045;
+  color: #FFFFFF;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 200px;
+}
+
+.template-dropdown select:hover {
+  background-color: #4B5157;
+}
+
+/* Optional: Add a dropdown arrow */
+.template-dropdown select {
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="7"><path fill="%23FFFFFF" d="M0 0l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 7px;
+  padding-right: 30px;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 600px) {
+  .template-dropdown {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .template-dropdown label {
+    margin-bottom: 5px;
+  }
+
+  .template-dropdown select {
+    width: 100%;
+  }
+}
+
+/* Help Icon Styles */
+.help-icon-container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.help-icon {
+  fill: #FFFFFF;
+}
+
+.tooltip {
+  position: absolute;
+  top: -5px;
+  left: 105%;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+/* Adjust tooltip position if needed */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #333 transparent transparent;
 }

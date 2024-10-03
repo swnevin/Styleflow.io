@@ -1,21 +1,26 @@
 /* src/components/LauncherSettings.css */
+
+.launcher-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.launcher-settings h3 {
+  margin-bottom: 10px;
+}
+
 .launcher-settings-input {
-    margin: 10px 0;
-  }
-  
-  .launcher-settings-input label {
-    display: block;
-    margin-bottom: 5px;
-    color: #FFFFFF;
-  }
-  
-  .launcher-settings-input input[type="number"],
-  .launcher-settings-input input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #3F72F5;
-    border-radius: 5px;
-    background-color: #FFFFFF;
-    color: #1F2428;
-  }
-  
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.launcher-settings-input label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.launcher-settings-input input {
+  padding: 5px;
+  font-size: 16px;
+}

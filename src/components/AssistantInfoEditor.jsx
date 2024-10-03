@@ -1,10 +1,12 @@
 // src/components/AssistantInfoEditor.jsx
+
 import React from 'react';
+import HelpIcon from './HelpIcon';
 import './AssistantInfoEditor.css';
 
 /**
  * AssistantInfoEditor Component
- * Allows customization of assistant's name, description, logo, and project ID.
+ * Allows customization of assistant's name, description, logo, avatar image, and project ID.
  */
 function AssistantInfoEditor({
   assistantName,
@@ -13,49 +15,70 @@ function AssistantInfoEditor({
   setAssistantDescription,
   assistantLogo,
   setAssistantLogo,
+  assistantAvatarImage,
+  setAssistantAvatarImage,
   projectID,
   setProjectID,
-  title
 }) {
   return (
-    <div className="assistant-info-editor" title={title}>
+    <div className="assistant-info-editor">
       <h3>Assistant Information</h3>
       <div className="assistant-info-input">
-        <label>Name:</label>
-        <input 
-          type="text" 
-          value={assistantName} 
+        <label>
+          Name:
+          <HelpIcon text="Enter the assistant's name" />
+        </label>
+        <input
+          type="text"
+          value={assistantName}
           onChange={(e) => setAssistantName(e.target.value)}
-          title="Enter the assistant's name"
         />
       </div>
       <div className="assistant-info-input">
-        <label>Description:</label>
-        <input 
-          type="text" 
-          value={assistantDescription} 
+        <label>
+          Description:
+          <HelpIcon text="Enter a description for the assistant" />
+        </label>
+        <input
+          type="text"
+          value={assistantDescription}
           onChange={(e) => setAssistantDescription(e.target.value)}
-          title="Enter a description for the assistant"
         />
       </div>
       <div className="assistant-info-input">
-        <label>Logo URL:</label>
-        <input 
-          type="text" 
-          value={assistantLogo} 
+        <label>
+          Logo URL:
+          <HelpIcon text="Enter the URL for the assistant's logo" />
+        </label>
+        <input
+          type="text"
+          value={assistantLogo}
           onChange={(e) => setAssistantLogo(e.target.value)}
-          placeholder="Enter image URL"
-          title="Enter the URL for the assistant's logo"
+          placeholder="Enter logo image URL"
         />
       </div>
       <div className="assistant-info-input">
-        <label>Project ID:</label>
-        <input 
-          type="text" 
-          value={projectID} 
+        <label>
+          Avatar Image URL:
+          <HelpIcon text="Set a custom avatar image for the assistant" />
+        </label>
+        <input
+          type="text"
+          value={assistantAvatarImage}
+          onChange={(e) => setAssistantAvatarImage(e.target.value)}
+          placeholder="Enter avatar image URL"
+        />
+      </div>
+      <div className="assistant-info-input">
+        <label>
+          Project ID:
+          <HelpIcon text="Enter your Voiceflow Project ID" />
+        </label>
+        <input
+          type="text"
+          value={projectID}
           onChange={(e) => setProjectID(e.target.value)}
           placeholder="Enter Voiceflow Project ID"
-          title="Enter your Voiceflow Project ID"
         />
       </div>
     </div>
