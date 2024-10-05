@@ -20,9 +20,6 @@ import templates from './templates';
 import './App.css';
 
 function App() {
-  // ---------------------------
-  // Theme and Appearance States
-  // ---------------------------
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
   const [textColor, setTextColor] = useState('#1F2428');
   const [brandColor, setBrandColor] = useState('#4375F5');
@@ -30,64 +27,37 @@ function App() {
   const [theme, setTheme] = useState('Light');
   const [selectedTemplate, setSelectedTemplate] = useState('Default');
 
-  // ---------------------------------
-  // Embed and Widget Settings States
-  // ---------------------------------
   const [embedMode, setEmbedMode] = useState('overlay');
   const [chatWidth, setChatWidth] = useState(380);
   const [autoOpen, setAutoOpen] = useState(true);
 
-  // -----------------------------------
-  // Assistant Information States
-  // -----------------------------------
   const [assistantName, setAssistantName] = useState('Assistant');
   const [assistantDescription, setAssistantDescription] = useState('How can I assist you today?');
   const [assistantLogo, setAssistantLogo] = useState('https://i.postimg.cc/Bn95VC86/Styleflow-VF.png');
   const [assistantAvatarImage, setAssistantAvatarImage] = useState('');
   const [assistantDescriptionTextColor, setAssistantDescriptionTextColor] = useState('#000000');
 
-  // -------------------------------
-  // Proactive Messages States
-  // -------------------------------
   const [proactiveMessages, setProactiveMessages] = useState([]);
 
-  // -------------------------------
-  // Voiceflow Project ID State
-  // -------------------------------
   const [projectID, setProjectID] = useState('66fa5d8dd6785bb2984c7cfb');
 
-  // -------------------------------
-  // Message Styles States
-  // -------------------------------
   const [userMessageBgColor, setUserMessageBgColor] = useState('#E0F7FA');
   const [userMessageTextColor, setUserMessageTextColor] = useState('#006064');
   const [assistantMessageBgColor, setAssistantMessageBgColor] = useState('#FFF3E0');
   const [assistantMessageTextColor, setAssistantMessageTextColor] = useState('#E65100');
 
-  // --------------------------------
-  // Interface Settings States
-  // --------------------------------
   const [headerColor, setHeaderColor] = useState(brandColor);
   const [footerColor, setFooterColor] = useState('');
   const [titleTextColor, setTitleTextColor] = useState('#1F2428');
   const [endChatTextColor, setEndChatTextColor] = useState('#000000');
-  const [userInputPlaceholderText, setUserInputPlaceholderText] = useState('Type your message...');
+  const [userInputPlaceholderText, setUserInputPlaceholderText] = useState('Message...');
 
-  // -------------------------------
-  // Launcher Settings States
-  // -------------------------------
   const [launcherColor, setLauncherColor] = useState('#4375F5');
   const [launcherSize, setLauncherSize] = useState(60);
   const [launcherImage, setLauncherImage] = useState('');
 
-  // ---------------------------------
-  // Reference to Check Initialization
-  // ---------------------------------
   const widgetInitialized = useRef(false);
 
-  // ---------------------------------
-  // Accordion State Management
-  // ---------------------------------
   const [expandedSections, setExpandedSections] = useState({
     themeSettings: false,
     messageStyles: false,
@@ -98,9 +68,6 @@ function App() {
     interfaceSettings: false,
   });
 
-  // ---------------------------------
-  // Toggle Accordion Sections
-  // ---------------------------------
   const toggleSection = (sectionName) => {
     setExpandedSections((prevState) => ({
       ...prevState,
@@ -298,6 +265,27 @@ function App() {
         color: var(--font-color) !important;
         border: 2px !important;
     }
+
+    /* User Input Placeholder Customization */
+    .vfrc-chat-input textarea {
+        background-image: none;
+    }
+    .vfrc-chat-input textarea::-moz-placeholder {
+        color: transparent;
+    }
+    .vfrc-chat-input textarea::placeholder {
+        color: transparent;
+    }
+
+    .vfrc-chat-input textarea:-moz-placeholder-shown {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='250px'><text x='15' y='25' fill='silver' font-family='verdana' font-size='15'>${encodeURIComponent(userInputPlaceholderText)}...</text></svg>");
+        background-repeat: no-repeat;
+    }
+
+    .vfrc-chat-input textarea:placeholder-shown {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='50px' width='250px'><text x='15' y='25' fill='silver' font-family='verdana' font-size='15'>${encodeURIComponent(userInputPlaceholderText)}...</text></svg>");
+        background-repeat: no-repeat;
+    }
     `;
   };
 
@@ -403,22 +391,6 @@ function App() {
           if (autoOpen) {
             window.voiceflow.chat.open();
             console.log('Voiceflow widget opened.');
-          }
-          // Attempt to set the user input placeholder text
-          const iframe = document.querySelector('iframe');
-          if (iframe) {
-            iframe.onload = () => {
-              try {
-                const inputField = iframe.contentWindow.document.querySelector(
-                  '.vfrc-input'
-                );
-                if (inputField) {
-                  inputField.setAttribute('placeholder', userInputPlaceholderText);
-                }
-              } catch (error) {
-                console.error('Unable to access iframe content:', error);
-              }
-            };
           }
         })
         .catch((error) => {
