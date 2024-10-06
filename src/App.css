@@ -252,3 +252,12 @@
   border-style: solid;
   border-color: transparent #333 transparent transparent;
 }
+
+.interface-subcategory {
+  margin-bottom: 15px;
+}
+
+.interface-subcategory h4 {
+  margin-bottom: 10px;
+  color: var(--font-color);
+}

@@ -1,24 +1,26 @@
 // src/components/LauncherSettings.jsx
-
 import React from 'react';
 import ColorPicker from './ColorPicker';
+import ProactiveMessageEditor from './ProactiveMessageEditor';
 import HelpIcon from './HelpIcon';
 import './LauncherSettings.css';
 
+/**
+ * LauncherSettings Component
+ * Allows customization of the launcher button and proactive messages.
+ */
 function LauncherSettings({
   launcherColor,
   setLauncherColor,
   launcherSize,
   setLauncherSize,
-  // launcherOffset, // Removed from props
-  // setLauncherOffset, // Removed from props
   launcherImage,
   setLauncherImage,
-  title,
+  proactiveMessages,
+  setProactiveMessages,
 }) {
   return (
-    <div className="launcher-settings" title={title}>
-      <h3>Launcher Settings</h3>
+    <div className="launcher-settings">
       <ColorPicker
         label={
           <>
@@ -67,6 +69,11 @@ function LauncherSettings({
           placeholder="Enter image URL"
         />
       </div>
+      {/* Proactive Messages Editor */}
+      <ProactiveMessageEditor
+        proactiveMessages={proactiveMessages}
+        setProactiveMessages={setProactiveMessages}
+      />
     </div>
   );
 }

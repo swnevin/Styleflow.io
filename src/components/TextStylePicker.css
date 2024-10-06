@@ -1,0 +1,9 @@
+/* src/components/TextStylePicker.css */
+.text-style-picker h4 {
+  margin-top: 10px;
+  color: var(--font-color);
+}
+
+.text-style-picker .color-picker {
+  margin-bottom: 10px;
+}

@@ -83,6 +83,7 @@ function IntegrationCode({
   return (
     <div className="integration-code">
       <h2>Integration Code</h2>
+      <h4>The complete integration code ready to go</h4>
       <textarea
         readOnly
         value={codeSnippet}

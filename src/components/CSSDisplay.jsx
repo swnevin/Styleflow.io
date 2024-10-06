@@ -28,10 +28,12 @@ function CSSDisplay({ css, dataURL }) {
 
   return (
     <div className="css-display">
-      <h2>Generated CSS</h2>
+      <h2>Generated CSS - Advanced</h2>
+      <h4>Use this if you want to further customize the CSS</h4>
       <textarea readOnly value={css} />
       <button onClick={copyToClipboard} title="Copy the generated CSS to clipboard">Copy CSS</button>
       <h2>Data URL</h2>
+      <h4>Use the generated data URL to apply the CSS to your bot. See how it's doen in integration code</h4>
       <textarea readOnly value={dataURL} />
       <button onClick={copyDataURL} title="Copy the Data URL to clipboard">Copy Data URL</button>
     </div>
